@@ -23,9 +23,9 @@ Lastly, run the whole notebook, and see the result in Operation section/ Tensorb
 ### Training
 
 The model will continue training until 85% accuracy of the dev set is reached.
-The loss value is reported for each epoch and test was done for every 10 epoch.  
+The loss value is reported for each epoch and test was done for every 10 epoch; Loss and accuracy against epoch is ploted using Tensorboard.
+
 ![snapshot of model training](docs/images/training_snapshot.png)
-Loss and accuracy against epoch is ploted using Tensorboard.  
 ![snapshot of tensorboard](docs/images/tensorboard.png)
 
 ### Predicting
