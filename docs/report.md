@@ -25,21 +25,30 @@ In general, image data augmentation techniques such as rotation, translation, fl
 
 A python library called ImageCaptcha was used. The style of the output was tuned by direct comparing with the raw images using human vision. There is no standard numarical system to comapre two images' styles and hence the tuning of generator may not be perfect. However, it will result in a clearly overfitting problem if the generated images are not similar to raw data.
 
-## Modeling
+## DNN Model
 The DNN model had 78 CNN layers, including 5 downsampling layers which in total downscale by a factor of 32, then followed by 2 full connected layers.
-Within each downsampling layers, 2 to 8 residual blocks with kernel_size 1x1,3x3,1x1 are added in order to carry the detail features along to a deeper layer.leaky_relu is used to prevent “dying ReLU” problem. 
+Within each downsampling layer, 2 to 8 residual blocks with kernel_size 1x1,3x3,1x1 are added in order to carry the detail features along to a deeper layer.leaky_relu is used to prevent “dying ReLU” problem. 
 Batch normalization is used after conv layer, as it brings significant improvements in convergence while preventing overfitting.
+### Overall Architecture
+![overall architecture](docs/images/overall_architecture.png)
+### Downsampling Block
+![conv block](docs/images/conv_block.png)
+### Residual Block
+![residual block](docs/images/residual_block.png)
+
 ## Evaluation
 ### Evaluation: Captcha Generator hyperparameters tuning
-In order to simulate the style of raw captcha images, direct comparation and false data analysis is used to tune the hyperparameters of generator. The default captcha building procedure may not be match to our purpuse and hence some of the functions are redefined.
+In order to simulate the style of raw captcha images, direct comparison and false data analysis is used to tune the hyperparameters of the generator. The default captcha building procedure was not matching with our purpose and hence some of the functions were redefined.
 ### Evaluation: DNN hyperparameters tuning
-There are 4 hyperparameters need to be tuned, they are ordered ascendingly according to degree of importance.
+There are 4 hyperparameters have been tuned. They are ordered ascendingly according to the degree of importance.
 * Learning rate
 * Batch normalization decay
 * Dropout rate
 * Leaky Relu alpha
-## Deployment
-The raw images where separated into 3 groups (training, dev, test set), each have 128 images. For each epachs, 128 new images will be generateed and added into the training set. For each 10 epachs, the model will be tested on 128 new images(test1) and dev set(test2). 
+## Deployment and Result
+The raw images were separated into 3 groups (training, dev, test set), each has 128 images. For each epoch, 128 new images will be generated and added to the training set. For every 10 epochs, the model will be tested on 128 new images(test1) and dev set(test2). The training will end until test2 accuracy >85%.  
+![training accurancy](docs/images/tensorboard.png)  
+As you can see the final accuracy of the training and test1 is almost 100%. Test2 is around 85%. After the model tuning, the dev set is merged into the training set and train again. The training will end until test set accuracy >85%. And Hence the final accuracy towards target captcha images is around 85%.
 ## Analysis and Development
-Assume the base error is 100% accuracy.
-According to bias–variance decomposition, both training and test1 can easily converge to nearly >99% accuacy which means that the model is trained without any bias or variance error. Although the accuracy of test2 is high( around 85%), there is still around 10% difference between test2 and test1 accuracies. This means that there are high variance in test1 with respect to test2. This can be caused by the difference between generated images(test1) and 
+Assume the base error is 100% accuracy.  
+According to bias-variance decomposition, both training and test1 can easily converge to nearly >99% accuracy which means that the model is trained without any bias or variance error. Although the accuracy of test2 is high( around 85%), there is still around 10% difference between test2 and test1 accuracies. This means that there is a high variance in test1 with respect to test2. This can be caused by the difference between generated images(test1) and raw images(test2/dev set) which implies that the captcha generator should be fine-tuned.
