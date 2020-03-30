@@ -30,11 +30,11 @@ The DNN model had 78 CNN layers, including 5 downsampling layers which in total 
 Within each downsampling layer, 2 to 8 residual blocks with kernel_size 1x1,3x3,1x1 are added in order to carry the detail features along to a deeper layer.leaky_relu is used to prevent “dying ReLU” problem. 
 Batch normalization is used after conv layer, as it brings significant improvements in convergence while preventing overfitting.
 ### Overall Architecture
-![overall architecture](/images/overall_architecture.png)
+![overall architecture](images/overall_architecture.png)
 ### Downsampling Block
-![conv block](/images/conv_block.png)
+![conv block](images/conv_block.png)
 ### Residual Block
-![residual block](/images/residual_block.png)
+![residual block](images/residual_block.png)
 
 ## Evaluation
 ### Evaluation: Captcha Generator hyperparameters tuning
@@ -47,7 +47,7 @@ There are 4 hyperparameters have been tuned. They are ordered ascendingly accord
 * Leaky Relu alpha
 ## Deployment and Result
 The raw images were separated into 3 groups (training, dev, test set), each has 128 images. For each epoch, 128 new images will be generated and added to the training set. For every 10 epochs, the model will be tested on 128 new images(test1) and dev set(test2). The training will end until test2 accuracy >85%.  
-![training accurancy](/images/tensorboard.png)  
+![training accurancy](images/tensorboard.png)  
 As you can see the final accuracy of the training and test1 is almost 100%. Test2 is around 85%. After the model tuning, the dev set is merged into the training set and train again. The training will end until test set accuracy >85%. And Hence the final accuracy towards target captcha images is around 85%.
 ## Analysis and Development
 Assume the base error is 100% accuracy.  
