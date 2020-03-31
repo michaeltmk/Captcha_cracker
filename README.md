@@ -37,7 +37,7 @@ Choose the image to predict and change the parameter batch_x_predict. If labels 
 Before training the CNN model, captcha generator's parameters are fine tuned during data exploration. Under this mode, a generated image and a random picked raw image are shown side by side for comparison. Besides, a section of the image matrix, and some statistical information are also provided.
 
 ## Report
-![report](docs/report.md)
+[report](docs/report.md)
 
 ## Reference
 
